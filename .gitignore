@@ -1,15 +1,15 @@
-# Python
-__pycache__/
+# Ambiente virtual
+.venv/
 *.pyc
-venv/
-.env
+__pycache__/
 
-# dbt / GCP keys / profiles
+# Chave GCP (NUNCA subir)
 *.json
-profiles.yml
-.secrets/
-# DuckDB files if any
-*.duckdb
+gcp-key.json
+
+# dbt folders
+target/
+dbt_packages/
 
 # VS Code
 .vscode/
