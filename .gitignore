@@ -7,9 +7,18 @@ __pycache__/
 *.json
 gcp-key.json
 
+*.env
+*.key
+*.creds
+
 # dbt folders
 target/
 dbt_packages/
 
 # VS Code
 .vscode/
+
+# Sensíveis
+profiles.yml
+secretkeys.txt
+*.duckdb
