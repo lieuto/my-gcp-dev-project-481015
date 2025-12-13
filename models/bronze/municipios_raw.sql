@@ -1,21 +1,25 @@
-name: 'projeto_pipeline'
-version: '1.0'
-config-version: 2
+WITH base AS (
+    SELECT
+        CAST(codigo_ibge AS INT64) AS codigo_ibge,
+        nome,
+        uf,
+        regiao,
+        CAST(populacao AS INT64) AS populacao,
+        CAST(area_km2 AS FLOAT64) AS area_km2
+    FROM {{ ref('municipios') }}
+),
 
-profile: 'projeto_pipeline'
+municipios_por_uf AS (
+    SELECT
+        uf,
+        COUNT(*) AS total_municipios_uf
+    FROM base
+    GROUP BY uf
+)
 
-model-paths: ["models"]
-
-models:
-  projeto_pipeline:
-    bronze:
-      +schema: dev_bronze
-      +materialized: table
-
-    silver:
-      +schema: dev_silver
-      +materialized: table
-
-    gold:
-      +schema: dev_gold
-      +materialized: table
+SELECT
+    b.*,
+    m.total_municipios_uf
+FROM base b
+LEFT JOIN municipios_por_uf m
+    ON b.uf = m.uf

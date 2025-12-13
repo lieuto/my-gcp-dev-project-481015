@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: municipios_raw
+    columns:
+      - name: codigo_ibge
+        tests:
+          - not_null
+          - unique
+      - name: nome
+        tests:
+          - not_null

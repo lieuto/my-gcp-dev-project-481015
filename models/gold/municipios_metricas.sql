@@ -1,11 +1,9 @@
-{{ config(materialized='table') }}
-
 SELECT
-  uf,
-  regiao,
-  COUNT(*) AS qtd_municipios,
-  SUM(populacao) AS populacao_total,
-  AVG(densidade) AS densidade_media
+    uf,
+    regiao,
+    COUNT(codigo_ibge) AS municipios_no_estado,
+    MAX(total_municipios_uf) AS total_municipios_uf,
+    SUM(populacao) AS populacao_total,
+    AVG(populacao) AS populacao_media
 FROM {{ ref('municipios_clean') }}
-GROUP BY 1, 2
-ORDER BY uf;
+GROUP BY uf, regiao

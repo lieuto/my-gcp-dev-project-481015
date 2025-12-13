@@ -9,13 +9,17 @@ model-paths: ["models"]
 models:
   projeto_pipeline:
     bronze:
-      +schema: dev_bronze
+      +schema: bronze
       +materialized: table
 
     silver:
-      +schema: dev_silver
+      +schema: silver
       +materialized: table
 
     gold:
-      +schema: dev_gold
+      +schema: gold
       +materialized: table
+seeds:
+  projeto_pipeline:
+    +schema: bronze
+    +quote_columns: false
