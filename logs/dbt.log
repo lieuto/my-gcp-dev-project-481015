@@ -2202,3 +2202,718 @@ WHERE populacao IS NOT NULL
 [0m23:59:37.782522 [debug] [Thread-2 (]: Timing info for model.projeto_pipeline.municipios_metricas (compile): 23:59:37.779153 => 23:59:37.782522
 [0m23:59:37.783708 [debug] [Thread-2 (]: Began executing node model.projeto_pipeline.municipios_metricas
 [0m23:59:37.785698 [debug] [Thread-2 (]: Opening a new connection, currently in state init
+[0m23:59:39.855395 [debug] [Thread-2 (]: Writing runtime sql for node "model.projeto_pipeline.municipios_metricas"
+[0m23:59:39.855395 [debug] [Thread-2 (]: On model.projeto_pipeline.municipios_metricas: /* {"app": "dbt", "dbt_version": "1.6.18", "profile_name": "projeto_pipeline", "target_name": "dev", "node_id": "model.projeto_pipeline.municipios_metricas"} */
+
+  
+    
+
+    create or replace table `my-gcp-dev-project-481015`.`dev_gold`.`municipios_metricas`
+      
+    
+    
+
+    OPTIONS()
+    as (
+      SELECT
+    uf,
+    regiao,
+    COUNT(codigo_ibge) AS municipios_no_estado,
+    MAX(total_municipios_uf) AS total_municipios_uf,
+    SUM(populacao) AS populacao_total,
+    AVG(populacao) AS populacao_media
+FROM `my-gcp-dev-project-481015`.`dev_silver`.`municipios_clean`
+GROUP BY uf, regiao
+    );
+  
+[0m23:59:40.397955 [debug] [Thread-2 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=my-gcp-dev-project-481015&j=bq:US:eac82aac-6201-4d10-8557-23664ccf6090&page=queryresults
+[0m23:59:42.227838 [debug] [Thread-2 (]: Timing info for model.projeto_pipeline.municipios_metricas (execute): 23:59:37.783708 => 23:59:42.227532
+[0m23:59:42.227838 [debug] [Thread-2 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '07a42bb9-852a-45f1-8b48-22fb3700f883', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E1B5C3A990>]}
+[0m23:59:42.227838 [info ] [Thread-2 (]: 3 of 3 OK created sql table model dev_gold.municipios_metricas ................. [[32mCREATE TABLE (10.0 rows, 365.0 Bytes processed)[0m in 4.46s]
+[0m23:59:42.227838 [debug] [Thread-2 (]: Finished running node model.projeto_pipeline.municipios_metricas
+[0m23:59:42.232978 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m23:59:42.233281 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015' was properly closed.
+[0m23:59:42.233281 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015' was properly closed.
+[0m23:59:42.234411 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015' was properly closed.
+[0m23:59:42.235410 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015_dev_silver' was properly closed.
+[0m23:59:42.235410 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015_dev_gold' was properly closed.
+[0m23:59:42.236411 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015_dev_bronze' was properly closed.
+[0m23:59:42.236411 [debug] [MainThread]: Connection 'model.projeto_pipeline.municipios_raw' was properly closed.
+[0m23:59:42.238413 [debug] [MainThread]: Connection 'model.projeto_pipeline.municipios_clean' was properly closed.
+[0m23:59:42.238413 [debug] [MainThread]: Connection 'model.projeto_pipeline.municipios_metricas' was properly closed.
+[0m23:59:42.239411 [info ] [MainThread]: 
+[0m23:59:42.240413 [info ] [MainThread]: Finished running 3 table models in 0 hours 0 minutes and 22.78 seconds (22.78s).
+[0m23:59:42.241411 [debug] [MainThread]: Command end result
+[0m23:59:42.251437 [info ] [MainThread]: 
+[0m23:59:42.252442 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m23:59:42.253442 [info ] [MainThread]: 
+[0m23:59:42.254446 [info ] [MainThread]: Done. PASS=3 WARN=0 ERROR=0 SKIP=0 TOTAL=3
+[0m23:59:42.255444 [debug] [MainThread]: Command `dbt run` succeeded at 23:59:42.255444 after 23.94 seconds
+[0m23:59:42.256445 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E1B38003D0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E1B3882CD0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E1B35B97D0>]}
+[0m23:59:42.256445 [debug] [MainThread]: Flushing usage events
+[0m00:00:27.980869 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F6708F0C90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F670E6B850>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F6707912D0>]}
+
+
+============================== 00:00:27.986492 | 9b597b23-f889-4759-84e7-c614b980296e ==============================
+[0m00:00:27.986492 [info ] [MainThread]: Running with dbt=1.6.18
+[0m00:00:27.987489 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'debug': 'False', 'log_path': 'C:\\Users\\eliel\\OneDrive\\Área de Trabalho\\projeto-pipeline\\logs', 'fail_fast': 'False', 'profiles_dir': 'C:\\Users\\eliel\\OneDrive\\Área de Trabalho\\projeto-pipeline', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'introspect': 'True', 'invocation_command': 'dbt run', 'target_path': 'None', 'log_format': 'default', 'send_anonymous_usage_stats': 'True'}
+[0m00:00:29.062223 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '9b597b23-f889-4759-84e7-c614b980296e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F672C30410>]}
+[0m00:00:29.076517 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '9b597b23-f889-4759-84e7-c614b980296e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F67284D390>]}
+[0m00:00:29.078375 [info ] [MainThread]: Registered adapter: bigquery=1.6.4
+[0m00:00:29.095091 [debug] [MainThread]: checksum: 7b9fab86a08e9e96a48a825af743c566d95b877e068b8c6d0dbafbf714447189, vars: {}, profile: , target: , version: 1.6.18
+[0m00:00:29.221963 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m00:00:29.221963 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m00:00:29.227965 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '9b597b23-f889-4759-84e7-c614b980296e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F67070A1D0>]}
+[0m00:00:29.240967 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '9b597b23-f889-4759-84e7-c614b980296e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F672C7A910>]}
+[0m00:00:29.241967 [info ] [MainThread]: Found 1 seed, 3 models, 3 tests, 0 sources, 0 exposures, 0 metrics, 393 macros, 0 groups, 0 semantic models
+[0m00:00:29.242964 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '9b597b23-f889-4759-84e7-c614b980296e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F670E7CF90>]}
+[0m00:00:29.244964 [info ] [MainThread]: 
+[0m00:00:29.245964 [debug] [MainThread]: Acquiring new bigquery connection 'master'
+[0m00:00:29.248964 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015'
+[0m00:00:29.249964 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015'
+[0m00:00:29.249964 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:00:29.250964 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015'
+[0m00:00:29.252965 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:00:29.288970 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:00:32.621340 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015_dev_silver'
+[0m00:00:32.622387 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015_dev_bronze'
+[0m00:00:32.622387 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:00:32.623386 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015_dev_gold'
+[0m00:00:32.624413 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:00:32.650733 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:00:34.958803 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '9b597b23-f889-4759-84e7-c614b980296e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F672C351D0>]}
+[0m00:00:34.962828 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m00:00:34.966827 [info ] [MainThread]: 
+[0m00:00:34.968169 [debug] [Thread-1 (]: Began running node model.projeto_pipeline.municipios_raw
+[0m00:00:34.987036 [info ] [Thread-1 (]: 1 of 3 START sql table model dev_bronze.municipios_raw ......................... [RUN]
+[0m00:00:34.992728 [debug] [Thread-1 (]: Acquiring new bigquery connection 'model.projeto_pipeline.municipios_raw'
+[0m00:00:34.995052 [debug] [Thread-1 (]: Began compiling node model.projeto_pipeline.municipios_raw
+[0m00:00:35.010534 [debug] [Thread-1 (]: Writing injected SQL for node "model.projeto_pipeline.municipios_raw"
+[0m00:00:35.010534 [debug] [Thread-1 (]: Timing info for model.projeto_pipeline.municipios_raw (compile): 00:00:34.997048 => 00:00:35.010534
+[0m00:00:35.016843 [debug] [Thread-1 (]: Began executing node model.projeto_pipeline.municipios_raw
+[0m00:00:35.034877 [debug] [Thread-1 (]: Opening a new connection, currently in state init
+[0m00:00:37.036867 [debug] [Thread-1 (]: Writing runtime sql for node "model.projeto_pipeline.municipios_raw"
+[0m00:00:37.037867 [debug] [Thread-1 (]: On model.projeto_pipeline.municipios_raw: /* {"app": "dbt", "dbt_version": "1.6.18", "profile_name": "projeto_pipeline", "target_name": "dev", "node_id": "model.projeto_pipeline.municipios_raw"} */
+
+  
+    
+
+    create or replace table `my-gcp-dev-project-481015`.`dev_bronze`.`municipios_raw`
+      
+    
+    
+
+    OPTIONS()
+    as (
+      WITH base AS (
+    SELECT
+        CAST(codigo_ibge AS INT64) AS codigo_ibge,
+        nome,
+        uf,
+        regiao,
+        CAST(populacao AS INT64) AS populacao,
+        CAST(area_km2 AS FLOAT64) AS area_km2
+    FROM `my-gcp-dev-project-481015`.`dev_bronze`.`municipios`
+),
+
+municipios_por_uf AS (
+    SELECT
+        uf,
+        COUNT(*) AS total_municipios_uf
+    FROM base
+    GROUP BY uf
+)
+
+SELECT
+    b.*,
+    m.total_municipios_uf
+FROM base b
+LEFT JOIN municipios_por_uf m
+    ON b.uf = m.uf
+    );
+  
+[0m00:00:37.636055 [debug] [Thread-1 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=my-gcp-dev-project-481015&j=bq:US:d32bb14c-e5d1-491d-8bc5-a086126551b3&page=queryresults
+[0m00:00:47.702139 [debug] [Thread-1 (]: Timing info for model.projeto_pipeline.municipios_raw (execute): 00:00:35.017853 => 00:00:47.702139
+[0m00:00:47.702139 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '9b597b23-f889-4759-84e7-c614b980296e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F6727D46D0>]}
+[0m00:00:47.702139 [info ] [Thread-1 (]: 1 of 3 OK created sql table model dev_bronze.municipios_raw .................... [[32mCREATE TABLE (10.0 rows, 478.0 Bytes processed)[0m in 12.71s]
+[0m00:00:47.702139 [debug] [Thread-1 (]: Finished running node model.projeto_pipeline.municipios_raw
+[0m00:00:47.702139 [debug] [Thread-3 (]: Began running node model.projeto_pipeline.municipios_clean
+[0m00:00:47.702139 [info ] [Thread-3 (]: 2 of 3 START sql table model dev_silver.municipios_clean ....................... [RUN]
+[0m00:00:47.702139 [debug] [Thread-3 (]: Acquiring new bigquery connection 'model.projeto_pipeline.municipios_clean'
+[0m00:00:47.702139 [debug] [Thread-3 (]: Began compiling node model.projeto_pipeline.municipios_clean
+[0m00:00:47.712781 [debug] [Thread-3 (]: Writing injected SQL for node "model.projeto_pipeline.municipios_clean"
+[0m00:00:47.714606 [debug] [Thread-3 (]: Timing info for model.projeto_pipeline.municipios_clean (compile): 00:00:47.702139 => 00:00:47.713531
+[0m00:00:47.714606 [debug] [Thread-3 (]: Began executing node model.projeto_pipeline.municipios_clean
+[0m00:00:47.717639 [debug] [Thread-3 (]: Opening a new connection, currently in state init
+[0m00:00:49.603240 [debug] [Thread-3 (]: Writing runtime sql for node "model.projeto_pipeline.municipios_clean"
+[0m00:00:49.603240 [debug] [Thread-3 (]: On model.projeto_pipeline.municipios_clean: /* {"app": "dbt", "dbt_version": "1.6.18", "profile_name": "projeto_pipeline", "target_name": "dev", "node_id": "model.projeto_pipeline.municipios_clean"} */
+
+  
+    
+
+    create or replace table `my-gcp-dev-project-481015`.`dev_silver`.`municipios_clean`
+      
+    
+    
+
+    OPTIONS()
+    as (
+      SELECT
+    codigo_ibge,
+    nome AS municipio,
+    uf,
+    regiao,
+    populacao,
+    area_km2,
+    total_municipios_uf
+FROM `my-gcp-dev-project-481015`.`dev_bronze`.`municipios_raw`
+WHERE populacao IS NOT NULL
+    );
+  
+[0m00:00:50.160668 [debug] [Thread-3 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=my-gcp-dev-project-481015&j=bq:US:9e59d629-4856-4047-95e9-be5dc22a95fb&page=queryresults
+[0m00:00:52.329938 [debug] [Thread-3 (]: Timing info for model.projeto_pipeline.municipios_clean (execute): 00:00:47.715612 => 00:00:52.329938
+[0m00:00:52.329938 [debug] [Thread-3 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '9b597b23-f889-4759-84e7-c614b980296e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F672C1BF10>]}
+[0m00:00:52.329938 [info ] [Thread-3 (]: 2 of 3 OK created sql table model dev_silver.municipios_clean .................. [[32mCREATE TABLE (10.0 rows, 558.0 Bytes processed)[0m in 4.63s]
+[0m00:00:52.329938 [debug] [Thread-3 (]: Finished running node model.projeto_pipeline.municipios_clean
+[0m00:00:52.329938 [debug] [Thread-2 (]: Began running node model.projeto_pipeline.municipios_metricas
+[0m00:00:52.329938 [info ] [Thread-2 (]: 3 of 3 START sql table model dev_gold.municipios_metricas ...................... [RUN]
+[0m00:00:52.329938 [debug] [Thread-2 (]: Acquiring new bigquery connection 'model.projeto_pipeline.municipios_metricas'
+[0m00:00:52.343540 [debug] [Thread-2 (]: Began compiling node model.projeto_pipeline.municipios_metricas
+[0m00:00:52.347172 [debug] [Thread-2 (]: Writing injected SQL for node "model.projeto_pipeline.municipios_metricas"
+[0m00:00:52.348172 [debug] [Thread-2 (]: Timing info for model.projeto_pipeline.municipios_metricas (compile): 00:00:52.344160 => 00:00:52.348172
+[0m00:00:52.349172 [debug] [Thread-2 (]: Began executing node model.projeto_pipeline.municipios_metricas
+[0m00:00:52.351200 [debug] [Thread-2 (]: Opening a new connection, currently in state init
+[0m00:00:54.327325 [debug] [Thread-2 (]: Writing runtime sql for node "model.projeto_pipeline.municipios_metricas"
+[0m00:00:54.328348 [debug] [Thread-2 (]: On model.projeto_pipeline.municipios_metricas: /* {"app": "dbt", "dbt_version": "1.6.18", "profile_name": "projeto_pipeline", "target_name": "dev", "node_id": "model.projeto_pipeline.municipios_metricas"} */
+
+  
+    
+
+    create or replace table `my-gcp-dev-project-481015`.`dev_gold`.`municipios_metricas`
+      
+    
+    
+
+    OPTIONS()
+    as (
+      SELECT
+    uf,
+    regiao,
+    COUNT(codigo_ibge) AS municipios_no_estado,
+    MAX(total_municipios_uf) AS total_municipios_uf,
+    SUM(populacao) AS populacao_total,
+    AVG(populacao) AS populacao_media
+FROM `my-gcp-dev-project-481015`.`dev_silver`.`municipios_clean`
+GROUP BY uf, regiao
+    );
+  
+[0m00:00:54.863785 [debug] [Thread-2 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=my-gcp-dev-project-481015&j=bq:US:bdc52698-bd64-4792-8564-f0e86d95aaf9&page=queryresults
+[0m00:00:56.970592 [debug] [Thread-2 (]: Timing info for model.projeto_pipeline.municipios_metricas (execute): 00:00:52.349172 => 00:00:56.970592
+[0m00:00:56.970592 [debug] [Thread-2 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '9b597b23-f889-4759-84e7-c614b980296e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F672E47F90>]}
+[0m00:00:56.972601 [info ] [Thread-2 (]: 3 of 3 OK created sql table model dev_gold.municipios_metricas ................. [[32mCREATE TABLE (10.0 rows, 365.0 Bytes processed)[0m in 4.64s]
+[0m00:00:56.972601 [debug] [Thread-2 (]: Finished running node model.projeto_pipeline.municipios_metricas
+[0m00:00:56.972601 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m00:00:56.972601 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015' was properly closed.
+[0m00:00:56.972601 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015' was properly closed.
+[0m00:00:56.972601 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015' was properly closed.
+[0m00:00:56.972601 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015_dev_silver' was properly closed.
+[0m00:00:56.972601 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015_dev_bronze' was properly closed.
+[0m00:00:56.972601 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015_dev_gold' was properly closed.
+[0m00:00:56.980704 [debug] [MainThread]: Connection 'model.projeto_pipeline.municipios_raw' was properly closed.
+[0m00:00:56.980704 [debug] [MainThread]: Connection 'model.projeto_pipeline.municipios_clean' was properly closed.
+[0m00:00:56.980704 [debug] [MainThread]: Connection 'model.projeto_pipeline.municipios_metricas' was properly closed.
+[0m00:00:56.980704 [info ] [MainThread]: 
+[0m00:00:56.982711 [info ] [MainThread]: Finished running 3 table models in 0 hours 0 minutes and 27.73 seconds (27.73s).
+[0m00:00:56.984967 [debug] [MainThread]: Command end result
+[0m00:00:56.994550 [info ] [MainThread]: 
+[0m00:00:56.995550 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m00:00:56.996100 [info ] [MainThread]: 
+[0m00:00:56.996100 [info ] [MainThread]: Done. PASS=3 WARN=0 ERROR=0 SKIP=0 TOTAL=3
+[0m00:00:56.997660 [debug] [MainThread]: Command `dbt run` succeeded at 00:00:56.997660 after 29.06 seconds
+[0m00:00:56.997660 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F670790410>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F670A7FCD0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F669D0DB90>]}
+[0m00:00:56.999122 [debug] [MainThread]: Flushing usage events
+[0m00:03:41.658576 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A3B6AC1E50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A3B7A02750>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A3B78C0F50>]}
+
+
+============================== 00:03:41.662546 | 20dba807-0f30-4efe-8635-9ffec0214880 ==============================
+[0m00:03:41.662546 [info ] [MainThread]: Running with dbt=1.6.18
+[0m00:03:41.663543 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': 'C:\\Users\\eliel\\OneDrive\\Área de Trabalho\\projeto-pipeline', 'debug': 'False', 'fail_fast': 'False', 'log_path': 'C:\\Users\\eliel\\OneDrive\\Área de Trabalho\\projeto-pipeline\\logs', 'version_check': 'True', 'warn_error': 'None', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'log_format': 'default', 'introspect': 'True', 'target_path': 'None', 'invocation_command': 'dbt seed', 'send_anonymous_usage_stats': 'True'}
+[0m00:03:42.443113 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '20dba807-0f30-4efe-8635-9ffec0214880', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A3B9C0E310>]}
+[0m00:03:42.457295 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '20dba807-0f30-4efe-8635-9ffec0214880', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A3B97C1BD0>]}
+[0m00:03:42.459296 [info ] [MainThread]: Registered adapter: bigquery=1.6.4
+[0m00:03:42.469625 [debug] [MainThread]: checksum: 7b9fab86a08e9e96a48a825af743c566d95b877e068b8c6d0dbafbf714447189, vars: {}, profile: , target: , version: 1.6.18
+[0m00:03:42.546613 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m00:03:42.546613 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m00:03:42.546613 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '20dba807-0f30-4efe-8635-9ffec0214880', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A3B76DA050>]}
+[0m00:03:42.572405 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '20dba807-0f30-4efe-8635-9ffec0214880', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A3B9C4AA90>]}
+[0m00:03:42.573432 [info ] [MainThread]: Found 1 seed, 3 models, 3 tests, 0 sources, 0 exposures, 0 metrics, 393 macros, 0 groups, 0 semantic models
+[0m00:03:42.574404 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '20dba807-0f30-4efe-8635-9ffec0214880', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A3B33AFF10>]}
+[0m00:03:42.576404 [info ] [MainThread]: 
+[0m00:03:42.577404 [debug] [MainThread]: Acquiring new bigquery connection 'master'
+[0m00:03:42.577404 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015'
+[0m00:03:42.577404 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:03:45.158116 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015_dev_gold'
+[0m00:03:45.161074 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015_dev_silver'
+[0m00:03:45.165099 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015_dev_bronze'
+[0m00:03:45.167074 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:03:45.170100 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:03:45.171079 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:03:50.491892 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '20dba807-0f30-4efe-8635-9ffec0214880', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A3B97FEAD0>]}
+[0m00:03:50.492890 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m00:03:50.493890 [info ] [MainThread]: 
+[0m00:03:50.498019 [debug] [Thread-1 (]: Began running node seed.projeto_pipeline.municipios
+[0m00:03:50.499026 [info ] [Thread-1 (]: 1 of 1 START seed file dev_bronze.municipios ................................... [RUN]
+[0m00:03:50.499797 [debug] [Thread-1 (]: Acquiring new bigquery connection 'seed.projeto_pipeline.municipios'
+[0m00:03:50.500914 [debug] [Thread-1 (]: Began compiling node seed.projeto_pipeline.municipios
+[0m00:03:50.501915 [debug] [Thread-1 (]: Timing info for seed.projeto_pipeline.municipios (compile): 00:03:50.501915 => 00:03:50.501915
+[0m00:03:50.502916 [debug] [Thread-1 (]: Began executing node seed.projeto_pipeline.municipios
+[0m00:03:50.528233 [debug] [Thread-1 (]: Opening a new connection, currently in state init
+[0m00:03:56.112086 [debug] [Thread-1 (]: On seed.projeto_pipeline.municipios: /* {"app": "dbt", "dbt_version": "1.6.18", "profile_name": "projeto_pipeline", "target_name": "dev", "node_id": "seed.projeto_pipeline.municipios"} */
+
+    alter table `my-gcp-dev-project-481015`.`dev_bronze`.`municipios` set OPTIONS()
+  
+[0m00:03:56.468614 [debug] [Thread-1 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=my-gcp-dev-project-481015&j=bq:US:fed3afa7-c3a2-4fd6-86f7-d734b7bf1159&page=queryresults
+[0m00:03:56.999235 [debug] [Thread-1 (]: Writing runtime SQL for node "seed.projeto_pipeline.municipios"
+[0m00:03:57.031078 [debug] [Thread-1 (]: Timing info for seed.projeto_pipeline.municipios (execute): 00:03:50.502916 => 00:03:57.031078
+[0m00:03:57.031078 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '20dba807-0f30-4efe-8635-9ffec0214880', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A3B9CAFC90>]}
+[0m00:03:57.031078 [info ] [Thread-1 (]: 1 of 1 OK loaded seed file dev_bronze.municipios ............................... [[32mINSERT 10[0m in 6.53s]
+[0m00:03:57.031078 [debug] [Thread-1 (]: Finished running node seed.projeto_pipeline.municipios
+[0m00:03:57.039158 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m00:03:57.039158 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015' was properly closed.
+[0m00:03:57.041687 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015_dev_gold' was properly closed.
+[0m00:03:57.041687 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015_dev_silver' was properly closed.
+[0m00:03:57.041687 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015_dev_bronze' was properly closed.
+[0m00:03:57.041687 [debug] [MainThread]: Connection 'seed.projeto_pipeline.municipios' was properly closed.
+[0m00:03:57.041687 [info ] [MainThread]: 
+[0m00:03:57.043692 [info ] [MainThread]: Finished running 1 seed in 0 hours 0 minutes and 14.47 seconds (14.47s).
+[0m00:03:57.043692 [debug] [MainThread]: Command end result
+[0m00:03:57.056167 [info ] [MainThread]: 
+[0m00:03:57.056885 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m00:03:57.057892 [info ] [MainThread]: 
+[0m00:03:57.058892 [info ] [MainThread]: Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+[0m00:03:57.059169 [debug] [MainThread]: Command `dbt seed` succeeded at 00:03:57.059169 after 15.42 seconds
+[0m00:03:57.060175 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A3B798E490>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A3B798D010>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A3B0C9DB50>]}
+[0m00:03:57.060175 [debug] [MainThread]: Flushing usage events
+[0m00:09:29.112220 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000025264355D90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002526437B310>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000252645FE590>]}
+
+
+============================== 00:09:29.117768 | 837e2c3c-9888-4118-a184-88ec139bf346 ==============================
+[0m00:09:29.117768 [info ] [MainThread]: Running with dbt=1.6.18
+[0m00:09:29.118813 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'fail_fast': 'False', 'debug': 'False', 'log_path': 'C:\\Users\\eliel\\OneDrive\\Área de Trabalho\\projeto-pipeline\\logs', 'profiles_dir': 'C:\\Users\\eliel\\OneDrive\\Área de Trabalho\\projeto-pipeline', 'version_check': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'introspect': 'True', 'static_parser': 'True', 'invocation_command': 'dbt seed --full-refresh', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'send_anonymous_usage_stats': 'True'}
+[0m00:09:29.959171 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '837e2c3c-9888-4118-a184-88ec139bf346', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000025266470690>]}
+[0m00:09:29.973268 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '837e2c3c-9888-4118-a184-88ec139bf346', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000025266453D90>]}
+[0m00:09:29.975319 [info ] [MainThread]: Registered adapter: bigquery=1.6.4
+[0m00:09:29.987438 [debug] [MainThread]: checksum: 7b9fab86a08e9e96a48a825af743c566d95b877e068b8c6d0dbafbf714447189, vars: {}, profile: , target: , version: 1.6.18
+[0m00:09:30.102712 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 1 files added, 0 files changed.
+[0m00:09:30.103712 [debug] [MainThread]: Partial parsing: added file: projeto_pipeline://seeds\municipios_ibge.csv
+[0m00:09:30.148200 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '837e2c3c-9888-4118-a184-88ec139bf346', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000025266993850>]}
+[0m00:09:30.159283 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '837e2c3c-9888-4118-a184-88ec139bf346', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000025266992F90>]}
+[0m00:09:30.159283 [info ] [MainThread]: Found 2 seeds, 3 models, 3 tests, 0 sources, 0 exposures, 0 metrics, 393 macros, 0 groups, 0 semantic models
+[0m00:09:30.160284 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '837e2c3c-9888-4118-a184-88ec139bf346', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002526648C510>]}
+[0m00:09:30.162283 [info ] [MainThread]: 
+[0m00:09:30.163282 [debug] [MainThread]: Acquiring new bigquery connection 'master'
+[0m00:09:30.165282 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015'
+[0m00:09:30.166283 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:09:32.731426 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015_dev_gold'
+[0m00:09:32.735122 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015_dev_bronze'
+[0m00:09:32.737173 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:09:32.739141 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015_dev_silver'
+[0m00:09:32.741134 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:09:32.779712 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:09:35.138706 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '837e2c3c-9888-4118-a184-88ec139bf346', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000252668B3810>]}
+[0m00:09:35.139683 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m00:09:35.140112 [info ] [MainThread]: 
+[0m00:09:35.145111 [debug] [Thread-1 (]: Began running node seed.projeto_pipeline.municipios
+[0m00:09:35.145111 [debug] [Thread-2 (]: Began running node seed.projeto_pipeline.municipios_ibge
+[0m00:09:35.146120 [info ] [Thread-1 (]: 1 of 2 START seed file dev_bronze.municipios ................................... [RUN]
+[0m00:09:35.147117 [info ] [Thread-2 (]: 2 of 2 START seed file dev_bronze.municipios_ibge .............................. [RUN]
+[0m00:09:35.148111 [debug] [Thread-1 (]: Acquiring new bigquery connection 'seed.projeto_pipeline.municipios'
+[0m00:09:35.149125 [debug] [Thread-2 (]: Acquiring new bigquery connection 'seed.projeto_pipeline.municipios_ibge'
+[0m00:09:35.149125 [debug] [Thread-1 (]: Began compiling node seed.projeto_pipeline.municipios
+[0m00:09:35.150111 [debug] [Thread-2 (]: Began compiling node seed.projeto_pipeline.municipios_ibge
+[0m00:09:35.151111 [debug] [Thread-1 (]: Timing info for seed.projeto_pipeline.municipios (compile): 00:09:35.151111 => 00:09:35.151111
+[0m00:09:35.151111 [debug] [Thread-2 (]: Timing info for seed.projeto_pipeline.municipios_ibge (compile): 00:09:35.151111 => 00:09:35.151111
+[0m00:09:35.152111 [debug] [Thread-1 (]: Began executing node seed.projeto_pipeline.municipios
+[0m00:09:35.153111 [debug] [Thread-2 (]: Began executing node seed.projeto_pipeline.municipios_ibge
+[0m00:09:35.181541 [debug] [Thread-1 (]: Opening a new connection, currently in state init
+[0m00:09:35.242162 [debug] [Thread-2 (]: Opening a new connection, currently in state init
+[0m00:09:41.292573 [debug] [Thread-1 (]: On seed.projeto_pipeline.municipios: /* {"app": "dbt", "dbt_version": "1.6.18", "profile_name": "projeto_pipeline", "target_name": "dev", "node_id": "seed.projeto_pipeline.municipios"} */
+
+    alter table `my-gcp-dev-project-481015`.`dev_bronze`.`municipios` set OPTIONS()
+  
+[0m00:09:41.628716 [debug] [Thread-1 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=my-gcp-dev-project-481015&j=bq:US:fcdfd5ed-7799-4041-b717-aea4e0bd70e8&page=queryresults
+[0m00:09:42.021291 [debug] [Thread-2 (]: On seed.projeto_pipeline.municipios_ibge: /* {"app": "dbt", "dbt_version": "1.6.18", "profile_name": "projeto_pipeline", "target_name": "dev", "node_id": "seed.projeto_pipeline.municipios_ibge"} */
+
+    alter table `my-gcp-dev-project-481015`.`dev_bronze`.`municipios_ibge` set OPTIONS()
+  
+[0m00:09:42.170689 [debug] [Thread-1 (]: Writing runtime SQL for node "seed.projeto_pipeline.municipios"
+[0m00:09:42.186827 [debug] [Thread-1 (]: Timing info for seed.projeto_pipeline.municipios (execute): 00:09:35.153111 => 00:09:42.186827
+[0m00:09:42.186827 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '837e2c3c-9888-4118-a184-88ec139bf346', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000252663BBC90>]}
+[0m00:09:42.186827 [info ] [Thread-1 (]: 1 of 2 OK loaded seed file dev_bronze.municipios ............................... [[32mCREATE 10[0m in 7.04s]
+[0m00:09:42.186827 [debug] [Thread-1 (]: Finished running node seed.projeto_pipeline.municipios
+[0m00:09:42.358863 [debug] [Thread-2 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=my-gcp-dev-project-481015&j=bq:US:1aee8205-f701-43d2-998a-3c6ae5177232&page=queryresults
+[0m00:09:42.889991 [debug] [Thread-2 (]: Writing runtime SQL for node "seed.projeto_pipeline.municipios_ibge"
+[0m00:09:42.892992 [debug] [Thread-2 (]: Timing info for seed.projeto_pipeline.municipios_ibge (execute): 00:09:35.169459 => 00:09:42.892992
+[0m00:09:42.893992 [debug] [Thread-2 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '837e2c3c-9888-4118-a184-88ec139bf346', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002526694E290>]}
+[0m00:09:42.894990 [info ] [Thread-2 (]: 2 of 2 OK loaded seed file dev_bronze.municipios_ibge .......................... [[32mCREATE 5571[0m in 7.75s]
+[0m00:09:42.895993 [debug] [Thread-2 (]: Finished running node seed.projeto_pipeline.municipios_ibge
+[0m00:09:42.897993 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m00:09:42.898997 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015' was properly closed.
+[0m00:09:42.898997 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015_dev_gold' was properly closed.
+[0m00:09:42.900000 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015_dev_bronze' was properly closed.
+[0m00:09:42.900000 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015_dev_silver' was properly closed.
+[0m00:09:42.900997 [debug] [MainThread]: Connection 'seed.projeto_pipeline.municipios' was properly closed.
+[0m00:09:42.900997 [debug] [MainThread]: Connection 'seed.projeto_pipeline.municipios_ibge' was properly closed.
+[0m00:09:42.902000 [info ] [MainThread]: 
+[0m00:09:42.902000 [info ] [MainThread]: Finished running 2 seeds in 0 hours 0 minutes and 12.74 seconds (12.74s).
+[0m00:09:42.903000 [debug] [MainThread]: Command end result
+[0m00:09:42.913573 [info ] [MainThread]: 
+[0m00:09:42.914579 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m00:09:42.915582 [info ] [MainThread]: 
+[0m00:09:42.915582 [info ] [MainThread]: Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
+[0m00:09:42.916582 [debug] [MainThread]: Command `dbt seed` succeeded at 00:09:42.916582 after 13.83 seconds
+[0m00:09:42.917581 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000025264417C90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000252643EE810>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000252643572D0>]}
+[0m00:09:42.918582 [debug] [MainThread]: Flushing usage events
+[0m00:09:51.308991 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002754891D6D0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000027548165E50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000027548930690>]}
+
+
+============================== 00:09:51.315403 | dd511b0d-b60e-4171-bced-1b080502816d ==============================
+[0m00:09:51.315403 [info ] [MainThread]: Running with dbt=1.6.18
+[0m00:09:51.316411 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': 'C:\\Users\\eliel\\OneDrive\\Área de Trabalho\\projeto-pipeline', 'fail_fast': 'False', 'version_check': 'True', 'log_path': 'C:\\Users\\eliel\\OneDrive\\Área de Trabalho\\projeto-pipeline\\logs', 'warn_error': 'None', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'invocation_command': 'dbt run', 'static_parser': 'True', 'introspect': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'send_anonymous_usage_stats': 'True'}
+[0m00:09:52.192544 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'dd511b0d-b60e-4171-bced-1b080502816d', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000027548DDF0D0>]}
+[0m00:09:52.202545 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'dd511b0d-b60e-4171-bced-1b080502816d', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002754A7AA550>]}
+[0m00:09:52.206775 [info ] [MainThread]: Registered adapter: bigquery=1.6.4
+[0m00:09:52.220399 [debug] [MainThread]: checksum: 7b9fab86a08e9e96a48a825af743c566d95b877e068b8c6d0dbafbf714447189, vars: {}, profile: , target: , version: 1.6.18
+[0m00:09:52.320464 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m00:09:52.320464 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m00:09:52.326496 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'dd511b0d-b60e-4171-bced-1b080502816d', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002754AC483D0>]}
+[0m00:09:52.336470 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': 'dd511b0d-b60e-4171-bced-1b080502816d', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002754ABD7190>]}
+[0m00:09:52.337498 [info ] [MainThread]: Found 2 seeds, 3 models, 3 tests, 0 sources, 0 exposures, 0 metrics, 393 macros, 0 groups, 0 semantic models
+[0m00:09:52.338473 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': 'dd511b0d-b60e-4171-bced-1b080502816d', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000275442FFE90>]}
+[0m00:09:52.339498 [info ] [MainThread]: 
+[0m00:09:52.340980 [debug] [MainThread]: Acquiring new bigquery connection 'master'
+[0m00:09:52.342980 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015'
+[0m00:09:52.343981 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015'
+[0m00:09:52.343981 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:09:52.345124 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015'
+[0m00:09:52.346136 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:09:52.372441 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:09:54.807798 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015_dev_gold'
+[0m00:09:54.808821 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:09:54.809573 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015_dev_silver'
+[0m00:09:54.810635 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015_dev_bronze'
+[0m00:09:54.837458 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:09:54.838632 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:09:57.122396 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': 'dd511b0d-b60e-4171-bced-1b080502816d', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002754A6B4750>]}
+[0m00:09:57.124405 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m00:09:57.125389 [info ] [MainThread]: 
+[0m00:09:57.129917 [debug] [Thread-1 (]: Began running node model.projeto_pipeline.municipios_raw
+[0m00:09:57.129917 [info ] [Thread-1 (]: 1 of 3 START sql table model dev_bronze.municipios_raw ......................... [RUN]
+[0m00:09:57.131923 [debug] [Thread-1 (]: Acquiring new bigquery connection 'model.projeto_pipeline.municipios_raw'
+[0m00:09:57.131923 [debug] [Thread-1 (]: Began compiling node model.projeto_pipeline.municipios_raw
+[0m00:09:57.141098 [debug] [Thread-1 (]: Writing injected SQL for node "model.projeto_pipeline.municipios_raw"
+[0m00:09:57.142094 [debug] [Thread-1 (]: Timing info for model.projeto_pipeline.municipios_raw (compile): 00:09:57.132924 => 00:09:57.142094
+[0m00:09:57.142094 [debug] [Thread-1 (]: Began executing node model.projeto_pipeline.municipios_raw
+[0m00:09:57.157772 [debug] [Thread-1 (]: Opening a new connection, currently in state init
+[0m00:09:59.124810 [debug] [Thread-1 (]: Writing runtime sql for node "model.projeto_pipeline.municipios_raw"
+[0m00:09:59.124810 [debug] [Thread-1 (]: On model.projeto_pipeline.municipios_raw: /* {"app": "dbt", "dbt_version": "1.6.18", "profile_name": "projeto_pipeline", "target_name": "dev", "node_id": "model.projeto_pipeline.municipios_raw"} */
+
+  
+    
+
+    create or replace table `my-gcp-dev-project-481015`.`dev_bronze`.`municipios_raw`
+      
+    
+    
+
+    OPTIONS()
+    as (
+      WITH base AS (
+    SELECT
+        CAST(codigo_ibge AS INT64) AS codigo_ibge,
+        nome,
+        uf,
+        regiao,
+        CAST(populacao AS INT64) AS populacao,
+        CAST(area_km2 AS FLOAT64) AS area_km2
+    FROM `my-gcp-dev-project-481015`.`dev_bronze`.`municipios`
+),
+
+municipios_por_uf AS (
+    SELECT
+        uf,
+        COUNT(*) AS total_municipios_uf
+    FROM base
+    GROUP BY uf
+)
+
+SELECT
+    b.*,
+    m.total_municipios_uf
+FROM base b
+LEFT JOIN municipios_por_uf m
+    ON b.uf = m.uf
+    );
+  
+[0m00:09:59.771270 [debug] [Thread-1 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=my-gcp-dev-project-481015&j=bq:US:7e4457bd-f9e1-4675-9e85-0f66fb95e0d5&page=queryresults
+[0m00:10:02.133304 [debug] [Thread-1 (]: Timing info for model.projeto_pipeline.municipios_raw (execute): 00:09:57.143093 => 00:10:02.132332
+[0m00:10:02.134310 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'dd511b0d-b60e-4171-bced-1b080502816d', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002754A78C6D0>]}
+[0m00:10:02.135310 [info ] [Thread-1 (]: 1 of 3 OK created sql table model dev_bronze.municipios_raw .................... [[32mCREATE TABLE (10.0 rows, 478.0 Bytes processed)[0m in 5.00s]
+[0m00:10:02.136311 [debug] [Thread-1 (]: Finished running node model.projeto_pipeline.municipios_raw
+[0m00:10:02.137310 [debug] [Thread-3 (]: Began running node model.projeto_pipeline.municipios_clean
+[0m00:10:02.138311 [info ] [Thread-3 (]: 2 of 3 START sql table model dev_silver.municipios_clean ....................... [RUN]
+[0m00:10:02.139310 [debug] [Thread-3 (]: Acquiring new bigquery connection 'model.projeto_pipeline.municipios_clean'
+[0m00:10:02.140310 [debug] [Thread-3 (]: Began compiling node model.projeto_pipeline.municipios_clean
+[0m00:10:02.143308 [debug] [Thread-3 (]: Writing injected SQL for node "model.projeto_pipeline.municipios_clean"
+[0m00:10:02.144335 [debug] [Thread-3 (]: Timing info for model.projeto_pipeline.municipios_clean (compile): 00:10:02.140310 => 00:10:02.144335
+[0m00:10:02.145310 [debug] [Thread-3 (]: Began executing node model.projeto_pipeline.municipios_clean
+[0m00:10:02.147311 [debug] [Thread-3 (]: Opening a new connection, currently in state init
+[0m00:10:04.574593 [debug] [Thread-3 (]: Writing runtime sql for node "model.projeto_pipeline.municipios_clean"
+[0m00:10:04.575594 [debug] [Thread-3 (]: On model.projeto_pipeline.municipios_clean: /* {"app": "dbt", "dbt_version": "1.6.18", "profile_name": "projeto_pipeline", "target_name": "dev", "node_id": "model.projeto_pipeline.municipios_clean"} */
+
+  
+    
+
+    create or replace table `my-gcp-dev-project-481015`.`dev_silver`.`municipios_clean`
+      
+    
+    
+
+    OPTIONS()
+    as (
+      SELECT
+    codigo_ibge,
+    nome AS municipio,
+    uf,
+    regiao,
+    populacao,
+    area_km2,
+    total_municipios_uf
+FROM `my-gcp-dev-project-481015`.`dev_bronze`.`municipios_raw`
+WHERE populacao IS NOT NULL
+    );
+  
+[0m00:10:05.033972 [debug] [Thread-3 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=my-gcp-dev-project-481015&j=bq:US:25f7bf45-e44b-46b2-9ced-fac2604c713a&page=queryresults
+[0m00:10:07.118446 [debug] [Thread-3 (]: Timing info for model.projeto_pipeline.municipios_clean (execute): 00:10:02.145310 => 00:10:07.118446
+[0m00:10:07.119447 [debug] [Thread-3 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'dd511b0d-b60e-4171-bced-1b080502816d', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002754AB79B90>]}
+[0m00:10:07.120446 [info ] [Thread-3 (]: 2 of 3 OK created sql table model dev_silver.municipios_clean .................. [[32mCREATE TABLE (10.0 rows, 558.0 Bytes processed)[0m in 4.98s]
+[0m00:10:07.121447 [debug] [Thread-3 (]: Finished running node model.projeto_pipeline.municipios_clean
+[0m00:10:07.122448 [debug] [Thread-2 (]: Began running node model.projeto_pipeline.municipios_metricas
+[0m00:10:07.123446 [info ] [Thread-2 (]: 3 of 3 START sql table model dev_gold.municipios_metricas ...................... [RUN]
+[0m00:10:07.124448 [debug] [Thread-2 (]: Acquiring new bigquery connection 'model.projeto_pipeline.municipios_metricas'
+[0m00:10:07.124448 [debug] [Thread-2 (]: Began compiling node model.projeto_pipeline.municipios_metricas
+[0m00:10:07.129447 [debug] [Thread-2 (]: Writing injected SQL for node "model.projeto_pipeline.municipios_metricas"
+[0m00:10:07.130447 [debug] [Thread-2 (]: Timing info for model.projeto_pipeline.municipios_metricas (compile): 00:10:07.125473 => 00:10:07.130447
+[0m00:10:07.131448 [debug] [Thread-2 (]: Began executing node model.projeto_pipeline.municipios_metricas
+[0m00:10:07.133471 [debug] [Thread-2 (]: Opening a new connection, currently in state init
+[0m00:10:09.143200 [debug] [Thread-2 (]: Writing runtime sql for node "model.projeto_pipeline.municipios_metricas"
+[0m00:10:09.145195 [debug] [Thread-2 (]: On model.projeto_pipeline.municipios_metricas: /* {"app": "dbt", "dbt_version": "1.6.18", "profile_name": "projeto_pipeline", "target_name": "dev", "node_id": "model.projeto_pipeline.municipios_metricas"} */
+
+  
+    
+
+    create or replace table `my-gcp-dev-project-481015`.`dev_gold`.`municipios_metricas`
+      
+    
+    
+
+    OPTIONS()
+    as (
+      SELECT
+    uf,
+    regiao,
+    COUNT(codigo_ibge) AS municipios_no_estado,
+    MAX(total_municipios_uf) AS total_municipios_uf,
+    SUM(populacao) AS populacao_total,
+    AVG(populacao) AS populacao_media
+FROM `my-gcp-dev-project-481015`.`dev_silver`.`municipios_clean`
+GROUP BY uf, regiao
+    );
+  
+[0m00:10:09.689905 [debug] [Thread-2 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=my-gcp-dev-project-481015&j=bq:US:aaef7cc1-630e-474d-b615-cfdbd537aa53&page=queryresults
+[0m00:10:11.764169 [debug] [Thread-2 (]: Timing info for model.projeto_pipeline.municipios_metricas (execute): 00:10:07.131448 => 00:10:11.764169
+[0m00:10:11.765198 [debug] [Thread-2 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'dd511b0d-b60e-4171-bced-1b080502816d', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000027547A99850>]}
+[0m00:10:11.766169 [info ] [Thread-2 (]: 3 of 3 OK created sql table model dev_gold.municipios_metricas ................. [[32mCREATE TABLE (10.0 rows, 365.0 Bytes processed)[0m in 4.64s]
+[0m00:10:11.766532 [debug] [Thread-2 (]: Finished running node model.projeto_pipeline.municipios_metricas
+[0m00:10:11.769054 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m00:10:11.770055 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015' was properly closed.
+[0m00:10:11.770055 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015' was properly closed.
+[0m00:10:11.771055 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015' was properly closed.
+[0m00:10:11.771055 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015_dev_gold' was properly closed.
+[0m00:10:11.772055 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015_dev_silver' was properly closed.
+[0m00:10:11.772587 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015_dev_bronze' was properly closed.
+[0m00:10:11.772587 [debug] [MainThread]: Connection 'model.projeto_pipeline.municipios_raw' was properly closed.
+[0m00:10:11.774232 [debug] [MainThread]: Connection 'model.projeto_pipeline.municipios_clean' was properly closed.
+[0m00:10:11.774232 [debug] [MainThread]: Connection 'model.projeto_pipeline.municipios_metricas' was properly closed.
+[0m00:10:11.775239 [info ] [MainThread]: 
+[0m00:10:11.776239 [info ] [MainThread]: Finished running 3 table models in 0 hours 0 minutes and 19.43 seconds (19.43s).
+[0m00:10:11.777240 [debug] [MainThread]: Command end result
+[0m00:10:11.788763 [info ] [MainThread]: 
+[0m00:10:11.789763 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m00:10:11.791763 [info ] [MainThread]: 
+[0m00:10:11.791763 [info ] [MainThread]: Done. PASS=3 WARN=0 ERROR=0 SKIP=0 TOTAL=3
+[0m00:10:11.792763 [debug] [MainThread]: Command `dbt run` succeeded at 00:10:11.792763 after 20.53 seconds
+[0m00:10:11.793762 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000275488F04D0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000027548992A50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000027541C2DB90>]}
+[0m00:10:11.793762 [debug] [MainThread]: Flushing usage events
+[0m00:24:44.549478 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001DDB9520790>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001DDB956AF10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001DDB9888590>]}
+
+
+============================== 00:24:44.553474 | 977900be-03d2-445c-8ee7-0c01fce113c7 ==============================
+[0m00:24:44.553474 [info ] [MainThread]: Running with dbt=1.6.18
+[0m00:24:44.554480 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'debug': 'False', 'fail_fast': 'False', 'log_path': 'C:\\Users\\eliel\\OneDrive\\Área de Trabalho\\projeto-pipeline\\logs', 'profiles_dir': 'C:\\Users\\eliel\\OneDrive\\Área de Trabalho\\projeto-pipeline', 'version_check': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'static_parser': 'True', 'invocation_command': 'dbt seed', 'introspect': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'send_anonymous_usage_stats': 'True'}
+[0m00:24:45.327132 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '977900be-03d2-445c-8ee7-0c01fce113c7', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001DDBB61C150>]}
+[0m00:24:45.338022 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '977900be-03d2-445c-8ee7-0c01fce113c7', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001DDBB5C1290>]}
+[0m00:24:45.338022 [info ] [MainThread]: Registered adapter: bigquery=1.6.4
+[0m00:24:45.353244 [debug] [MainThread]: checksum: 7b9fab86a08e9e96a48a825af743c566d95b877e068b8c6d0dbafbf714447189, vars: {}, profile: , target: , version: 1.6.18
+[0m00:24:45.453075 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 2 files changed.
+[0m00:24:45.453075 [debug] [MainThread]: Partial parsing: updated file: projeto_pipeline://models\gold\municipios_metricas.sql
+[0m00:24:45.454256 [debug] [MainThread]: Partial parsing: updated file: projeto_pipeline://models\silver\municipios_clean.sql
+[0m00:24:45.504657 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '977900be-03d2-445c-8ee7-0c01fce113c7', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001DDBBBA3ED0>]}
+[0m00:24:45.517840 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '977900be-03d2-445c-8ee7-0c01fce113c7', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001DDBBB75B50>]}
+[0m00:24:45.518840 [info ] [MainThread]: Found 2 seeds, 3 models, 3 tests, 0 sources, 0 exposures, 0 metrics, 393 macros, 0 groups, 0 semantic models
+[0m00:24:45.519838 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '977900be-03d2-445c-8ee7-0c01fce113c7', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001DDB95589D0>]}
+[0m00:24:45.521846 [info ] [MainThread]: 
+[0m00:24:45.523872 [debug] [MainThread]: Acquiring new bigquery connection 'master'
+[0m00:24:45.525848 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015'
+[0m00:24:45.525848 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:24:48.281930 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015_dev_bronze'
+[0m00:24:48.281930 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015_dev_gold'
+[0m00:24:48.281930 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:24:48.281930 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015_dev_silver'
+[0m00:24:48.281930 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:24:48.313674 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:24:50.731170 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '977900be-03d2-445c-8ee7-0c01fce113c7', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001DDBBA95090>]}
+[0m00:24:50.738061 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m00:24:50.738061 [info ] [MainThread]: 
+[0m00:24:50.744417 [debug] [Thread-1 (]: Began running node seed.projeto_pipeline.municipios
+[0m00:24:50.745382 [debug] [Thread-2 (]: Began running node seed.projeto_pipeline.municipios_ibge
+[0m00:24:50.745382 [info ] [Thread-1 (]: 1 of 2 START seed file dev_bronze.municipios ................................... [RUN]
+[0m00:24:50.746474 [info ] [Thread-2 (]: 2 of 2 START seed file dev_bronze.municipios_ibge .............................. [RUN]
+[0m00:24:50.747508 [debug] [Thread-1 (]: Acquiring new bigquery connection 'seed.projeto_pipeline.municipios'
+[0m00:24:50.749241 [debug] [Thread-2 (]: Acquiring new bigquery connection 'seed.projeto_pipeline.municipios_ibge'
+[0m00:24:50.750356 [debug] [Thread-1 (]: Began compiling node seed.projeto_pipeline.municipios
+[0m00:24:50.751362 [debug] [Thread-2 (]: Began compiling node seed.projeto_pipeline.municipios_ibge
+[0m00:24:50.752354 [debug] [Thread-1 (]: Timing info for seed.projeto_pipeline.municipios (compile): 00:24:50.751362 => 00:24:50.751362
+[0m00:24:50.752800 [debug] [Thread-2 (]: Timing info for seed.projeto_pipeline.municipios_ibge (compile): 00:24:50.752800 => 00:24:50.752800
+[0m00:24:50.753808 [debug] [Thread-1 (]: Began executing node seed.projeto_pipeline.municipios
+[0m00:24:50.753808 [debug] [Thread-2 (]: Began executing node seed.projeto_pipeline.municipios_ibge
+[0m00:24:50.783183 [debug] [Thread-1 (]: Opening a new connection, currently in state init
+[0m00:24:50.841056 [debug] [Thread-2 (]: Opening a new connection, currently in state init
+[0m00:24:55.496616 [debug] [Thread-1 (]: On seed.projeto_pipeline.municipios: /* {"app": "dbt", "dbt_version": "1.6.18", "profile_name": "projeto_pipeline", "target_name": "dev", "node_id": "seed.projeto_pipeline.municipios"} */
+
+    alter table `my-gcp-dev-project-481015`.`dev_bronze`.`municipios` set OPTIONS()
+  
+[0m00:24:55.846040 [debug] [Thread-1 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=my-gcp-dev-project-481015&j=bq:US:6dd2b8fc-e01f-4077-861a-a47a891ac980&page=queryresults
+[0m00:24:56.337156 [debug] [Thread-1 (]: Writing runtime SQL for node "seed.projeto_pipeline.municipios"
+[0m00:24:56.341176 [debug] [Thread-1 (]: Timing info for seed.projeto_pipeline.municipios (execute): 00:24:50.754805 => 00:24:56.341176
+[0m00:24:56.341176 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '977900be-03d2-445c-8ee7-0c01fce113c7', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001DDBBC45E10>]}
+[0m00:24:56.341176 [info ] [Thread-1 (]: 1 of 2 OK loaded seed file dev_bronze.municipios ............................... [[32mINSERT 10[0m in 5.59s]
+[0m00:24:56.355944 [debug] [Thread-1 (]: Finished running node seed.projeto_pipeline.municipios
+[0m00:25:04.491524 [debug] [Thread-2 (]: On seed.projeto_pipeline.municipios_ibge: /* {"app": "dbt", "dbt_version": "1.6.18", "profile_name": "projeto_pipeline", "target_name": "dev", "node_id": "seed.projeto_pipeline.municipios_ibge"} */
+
+    alter table `my-gcp-dev-project-481015`.`dev_bronze`.`municipios_ibge` set OPTIONS()
+  
+[0m00:25:04.833040 [debug] [Thread-2 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=my-gcp-dev-project-481015&j=bq:US:37b9e213-5cc3-43b3-ac01-29a44a453d7e&page=queryresults
+[0m00:25:05.327675 [debug] [Thread-2 (]: Writing runtime SQL for node "seed.projeto_pipeline.municipios_ibge"
+[0m00:25:05.333183 [debug] [Thread-2 (]: Timing info for seed.projeto_pipeline.municipios_ibge (execute): 00:24:50.770355 => 00:25:05.333183
+[0m00:25:05.334184 [debug] [Thread-2 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '977900be-03d2-445c-8ee7-0c01fce113c7', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001DDBBCDD1D0>]}
+[0m00:25:05.335182 [info ] [Thread-2 (]: 2 of 2 OK loaded seed file dev_bronze.municipios_ibge .......................... [[32mINSERT 5571[0m in 14.59s]
+[0m00:25:05.336183 [debug] [Thread-2 (]: Finished running node seed.projeto_pipeline.municipios_ibge
+[0m00:25:05.338184 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m00:25:05.338184 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015' was properly closed.
+[0m00:25:05.339183 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015_dev_bronze' was properly closed.
+[0m00:25:05.339183 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015_dev_gold' was properly closed.
+[0m00:25:05.340183 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015_dev_silver' was properly closed.
+[0m00:25:05.340183 [debug] [MainThread]: Connection 'seed.projeto_pipeline.municipios' was properly closed.
+[0m00:25:05.341211 [debug] [MainThread]: Connection 'seed.projeto_pipeline.municipios_ibge' was properly closed.
+[0m00:25:05.341211 [info ] [MainThread]: 
+[0m00:25:05.342217 [info ] [MainThread]: Finished running 2 seeds in 0 hours 0 minutes and 19.82 seconds (19.82s).
+[0m00:25:05.343217 [debug] [MainThread]: Command end result
+[0m00:25:05.355217 [info ] [MainThread]: 
+[0m00:25:05.356217 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m00:25:05.357395 [info ] [MainThread]: 
+[0m00:25:05.359395 [info ] [MainThread]: Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
+[0m00:25:05.363395 [debug] [MainThread]: Command `dbt seed` succeeded at 00:25:05.363395 after 20.83 seconds
+[0m00:25:05.365396 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001DDB9558D90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001DDB6EE04D0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001DDB2B6DB90>]}
+[0m00:25:05.368398 [debug] [MainThread]: Flushing usage events
+[0m00:33:16.197521 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002383C85BA90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002383C1A7990>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002383BAFC910>]}
+
+
+============================== 00:33:16.204056 | afce4ad9-c5e5-456a-81bc-853a8a82eb02 ==============================
+[0m00:33:16.204056 [info ] [MainThread]: Running with dbt=1.6.18
+[0m00:33:16.204599 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': 'C:\\Users\\eliel\\OneDrive\\Área de Trabalho\\projeto-pipeline', 'fail_fast': 'False', 'debug': 'False', 'log_path': 'C:\\Users\\eliel\\OneDrive\\Área de Trabalho\\projeto-pipeline\\logs', 'warn_error': 'None', 'version_check': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'introspect': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'invocation_command': 'dbt seed', 'target_path': 'None', 'static_parser': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m00:33:17.115218 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'afce4ad9-c5e5-456a-81bc-853a8a82eb02', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002383C38E050>]}
+[0m00:33:17.130918 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'afce4ad9-c5e5-456a-81bc-853a8a82eb02', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002383E200DD0>]}
+[0m00:33:17.132916 [info ] [MainThread]: Registered adapter: bigquery=1.6.4
+[0m00:33:17.144916 [debug] [MainThread]: checksum: 7b9fab86a08e9e96a48a825af743c566d95b877e068b8c6d0dbafbf714447189, vars: {}, profile: , target: , version: 1.6.18
+[0m00:33:17.282260 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 2 files changed.
+[0m00:33:17.283262 [debug] [MainThread]: Partial parsing: updated file: projeto_pipeline://models\silver\municipios_clean.sql
+[0m00:33:17.284262 [debug] [MainThread]: Partial parsing: updated file: projeto_pipeline://models\gold\municipios_metricas.sql
+[0m00:33:17.335797 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'afce4ad9-c5e5-456a-81bc-853a8a82eb02', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002383E1DBF10>]}
+[0m00:33:17.348692 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': 'afce4ad9-c5e5-456a-81bc-853a8a82eb02', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002383E1F0350>]}
+[0m00:33:17.349692 [info ] [MainThread]: Found 2 seeds, 3 models, 3 tests, 0 sources, 0 exposures, 0 metrics, 393 macros, 0 groups, 0 semantic models
+[0m00:33:17.350696 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': 'afce4ad9-c5e5-456a-81bc-853a8a82eb02', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002383E643FD0>]}
+[0m00:33:17.353692 [info ] [MainThread]: 
+[0m00:33:17.354696 [debug] [MainThread]: Acquiring new bigquery connection 'master'
+[0m00:33:17.357692 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015'
+[0m00:33:17.358692 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:33:20.007603 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015_dev_bronze'
+[0m00:33:20.008603 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:33:20.009606 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015_dev_silver'
+[0m00:33:20.010605 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_my-gcp-dev-project-481015_dev_gold'
+[0m00:33:20.041114 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:33:20.042115 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m00:33:22.446854 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': 'afce4ad9-c5e5-456a-81bc-853a8a82eb02', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002383C38E9D0>]}
+[0m00:33:22.447851 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m00:33:22.448880 [info ] [MainThread]: 
+[0m00:33:22.453338 [debug] [Thread-1 (]: Began running node seed.projeto_pipeline.municipios
+[0m00:33:22.453338 [debug] [Thread-2 (]: Began running node seed.projeto_pipeline.municipios_ibge
+[0m00:33:22.454338 [info ] [Thread-1 (]: 1 of 2 START seed file dev_bronze.municipios ................................... [RUN]
+[0m00:33:22.455338 [info ] [Thread-2 (]: 2 of 2 START seed file dev_bronze.municipios_ibge .............................. [RUN]
+[0m00:33:22.456339 [debug] [Thread-1 (]: Acquiring new bigquery connection 'seed.projeto_pipeline.municipios'
+[0m00:33:22.458339 [debug] [Thread-2 (]: Acquiring new bigquery connection 'seed.projeto_pipeline.municipios_ibge'
+[0m00:33:22.458339 [debug] [Thread-1 (]: Began compiling node seed.projeto_pipeline.municipios
+[0m00:33:22.459338 [debug] [Thread-2 (]: Began compiling node seed.projeto_pipeline.municipios_ibge
+[0m00:33:22.460367 [debug] [Thread-1 (]: Timing info for seed.projeto_pipeline.municipios (compile): 00:33:22.460367 => 00:33:22.460367
+[0m00:33:22.461337 [debug] [Thread-2 (]: Timing info for seed.projeto_pipeline.municipios_ibge (compile): 00:33:22.460367 => 00:33:22.460367
+[0m00:33:22.461337 [debug] [Thread-1 (]: Began executing node seed.projeto_pipeline.municipios
+[0m00:33:22.462337 [debug] [Thread-2 (]: Began executing node seed.projeto_pipeline.municipios_ibge
+[0m00:33:22.490874 [debug] [Thread-1 (]: Opening a new connection, currently in state init
+[0m00:33:22.542766 [debug] [Thread-2 (]: Opening a new connection, currently in state init
+[0m00:33:28.517786 [debug] [Thread-1 (]: On seed.projeto_pipeline.municipios: /* {"app": "dbt", "dbt_version": "1.6.18", "profile_name": "projeto_pipeline", "target_name": "dev", "node_id": "seed.projeto_pipeline.municipios"} */
+
+    alter table `my-gcp-dev-project-481015`.`dev_bronze`.`municipios` set OPTIONS()
+  
+[0m00:33:28.821808 [debug] [Thread-2 (]: On seed.projeto_pipeline.municipios_ibge: /* {"app": "dbt", "dbt_version": "1.6.18", "profile_name": "projeto_pipeline", "target_name": "dev", "node_id": "seed.projeto_pipeline.municipios_ibge"} */
+
+    alter table `my-gcp-dev-project-481015`.`dev_bronze`.`municipios_ibge` set OPTIONS()
+  
+[0m00:33:28.867748 [debug] [Thread-1 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=my-gcp-dev-project-481015&j=bq:US:3e94535c-613a-495e-990a-667ee1e72cd0&page=queryresults
+[0m00:33:29.192616 [debug] [Thread-2 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=my-gcp-dev-project-481015&j=bq:US:c55aaa2c-c691-4803-93f6-f095ceec9ab2&page=queryresults
+[0m00:33:29.389986 [debug] [Thread-1 (]: Writing runtime SQL for node "seed.projeto_pipeline.municipios"
+[0m00:33:29.406649 [debug] [Thread-1 (]: Timing info for seed.projeto_pipeline.municipios (execute): 00:33:22.462337 => 00:33:29.404273
+[0m00:33:29.407658 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'afce4ad9-c5e5-456a-81bc-853a8a82eb02', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002383E741490>]}
+[0m00:33:29.408657 [info ] [Thread-1 (]: 1 of 2 OK loaded seed file dev_bronze.municipios ............................... [[32mINSERT 10[0m in 6.95s]
+[0m00:33:29.409656 [debug] [Thread-1 (]: Finished running node seed.projeto_pipeline.municipios
+[0m00:33:29.720370 [debug] [Thread-2 (]: Writing runtime SQL for node "seed.projeto_pipeline.municipios_ibge"
+[0m00:33:29.723335 [debug] [Thread-2 (]: Timing info for seed.projeto_pipeline.municipios_ibge (execute): 00:33:22.480014 => 00:33:29.723335
+[0m00:33:29.724800 [debug] [Thread-2 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'afce4ad9-c5e5-456a-81bc-853a8a82eb02', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002383E7EBC90>]}
+[0m00:33:29.725840 [info ] [Thread-2 (]: 2 of 2 OK loaded seed file dev_bronze.municipios_ibge .......................... [[32mINSERT 5571[0m in 7.27s]
+[0m00:33:29.726787 [debug] [Thread-2 (]: Finished running node seed.projeto_pipeline.municipios_ibge
+[0m00:33:29.728960 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m00:33:29.729966 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015' was properly closed.
+[0m00:33:29.729966 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015_dev_bronze' was properly closed.
+[0m00:33:29.730965 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015_dev_silver' was properly closed.
+[0m00:33:29.730965 [debug] [MainThread]: Connection 'list_my-gcp-dev-project-481015_dev_gold' was properly closed.
+[0m00:33:29.730965 [debug] [MainThread]: Connection 'seed.projeto_pipeline.municipios' was properly closed.
+[0m00:33:29.732474 [debug] [MainThread]: Connection 'seed.projeto_pipeline.municipios_ibge' was properly closed.
+[0m00:33:29.732474 [info ] [MainThread]: 
+[0m00:33:29.733481 [info ] [MainThread]: Finished running 2 seeds in 0 hours 0 minutes and 12.38 seconds (12.38s).
+[0m00:33:29.735480 [debug] [MainThread]: Command end result
+[0m00:33:29.746001 [info ] [MainThread]: 
+[0m00:33:29.747001 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m00:33:29.748000 [info ] [MainThread]: 
+[0m00:33:29.749002 [info ] [MainThread]: Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
+[0m00:33:29.749610 [debug] [MainThread]: Command `dbt seed` succeeded at 00:33:29.749610 after 13.57 seconds
+[0m00:33:29.750883 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002383C0E7890>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002383C17E550>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002383BA811D0>]}
+[0m00:33:29.751884 [debug] [MainThread]: Flushing usage events
